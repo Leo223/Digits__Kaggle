@@ -14,5 +14,5 @@ acc_model: 0.9772
 
 
 Leaderboard Kaggle:
-acc: 0.98985
+acc: 0.98985 //
 Pos: 1197
