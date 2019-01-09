@@ -93,7 +93,7 @@ model.compile(optimizer = optimizer , loss = "binary_crossentropy", metrics=["ac
 
 
 # funcion para modificar el factor de aprendizaje en funcion de su evolucion
-learning_rate_reduction = ReduceLROnPlateau(monitor='val_acc',
+learning_rate_reduction = ReduceLROnPlateau(monitor='acc',
                                             patience=3,
                                             verbose=1,
                                             factor=0.5,
