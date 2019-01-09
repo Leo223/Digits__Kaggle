@@ -108,4 +108,8 @@ history = model.fit_generator(datagen.flow(x_train,y_train, batch_size=batch_siz
 # Persistimos el modelo
 model.save('Model_newNN_GPU_v4.4.h5')
 
-## 50 epochs: Model --> loss: 0.0068 - acc: 0.9983 // Kaggle: Pos: 221 acc: 0.99685
+##  40 epochs: Model --> loss: 0.0068 - acc: 0.9983 // Kaggle: Pos: --- acc:
+##  50 epochs: Model --> loss: 0.0068 - acc: 0.9983 // Kaggle: Pos: 221 acc: 0.99685
+##  60 epochs: Model --> loss: 0.0061 - acc: 0.9986 // Kaggle: Pos: --- acc: 0.99671
+##  80 epochs: Model --> loss: 0.0051 - acc: 0.9987 // Kaggle: Pos: --- acc: 0.99671
+## 100 epochs: Model --> loss: 0.0048 - acc: 0.9990 // Kaggle: Pos: --- acc: 0.99600

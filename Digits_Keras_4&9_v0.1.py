@@ -6,7 +6,7 @@ import os
 
 from keras.preprocessing.image import ImageDataGenerator
 from keras.preprocessing import image
-from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPool2D
+from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPool2D, BatchNormalization
 from keras.models import Sequential
 from keras.optimizers import RMSprop
 from keras.utils import np_utils
@@ -52,18 +52,20 @@ model = Sequential()
 
 model.add(Conv2D(filters = 64, kernel_size = (3,3),padding = 'Same',
                  activation ='relu', input_shape = (28,28,1)))
+model.add(BatchNormalization())
 model.add(Conv2D(filters = 64, kernel_size = (3,3),padding = 'Same',
                  activation ='relu'))
-
+model.add(BatchNormalization())
 model.add(MaxPool2D(pool_size=(2,2)))
 model.add(Dropout(0.25))
 
 
 model.add(Conv2D(filters = 32, kernel_size = (3,3),padding = 'Same',
                  activation ='relu'))
+model.add(BatchNormalization())
 model.add(Conv2D(filters = 32, kernel_size = (3,3),padding = 'Same',
                  activation ='relu'))
-
+model.add(BatchNormalization())
 model.add(MaxPool2D(pool_size=(2,2), strides=(2,2)))
 model.add(Dropout(0.25))
 
@@ -90,19 +92,19 @@ learning_rate_reduction = ReduceLROnPlateau(monitor='acc',
 
 # Data Augmentation
 datagen = ImageDataGenerator(
-    rotation_range=10,
+    rotation_range=15,
     zoom_range=0.2,
     width_shift_range=0.1,
     height_shift_range=0.1)
 datagen.fit(x_train)
 
-epochs = 2 #
-batch_size = 100
+epochs = 30 #
+batch_size = 86
 history = model.fit_generator(datagen.flow(x_train,y_train, batch_size=batch_size),
                               epochs = epochs,
                               verbose = 1,
                               # steps_per_epoch = x_train.shape[0] // batch_size,
-                              steps_per_epoch = 3000,
+                              steps_per_epoch = 100,
                               callbacks = [learning_rate_reduction])
 
 # Persistimos el modelo
