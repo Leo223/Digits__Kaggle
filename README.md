@@ -9,10 +9,8 @@ Practice Skills
 Computer vision fundamentals including simple neural networks
 
 ----------
-Model:
-acc_model: 0.9772
-
+Keras Model --> loss: 0.0068 - acc: 0.9983
 
 Leaderboard Kaggle:
-acc: 0.98985 //
-Pos: 1197
+acc: 0.99685 //
+Pos: 221
