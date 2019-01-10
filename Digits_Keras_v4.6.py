@@ -32,16 +32,6 @@ x_train = x_train.reshape(x_train.shape[0],28,28,1)
 # Vectorizamos las salidas
 y_train = np_utils.to_categorical(y_train,10)
 
-""" Data Augmentation Selective"""
-
-
-
-
-
-
-
-
-
 """
 Arquitectura Red Neuronal (Original)
 """
@@ -83,7 +73,6 @@ model.add(Dense(10, activation = "softmax"))
 Fin Arquitectura Red Neuronal
 """
 
-# optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999)
 optimizer = RMSprop(lr=0.001, rho=0.9, epsilon=1e-08, decay=0.0)
 model.compile(optimizer = optimizer , loss = "categorical_crossentropy", metrics=["accuracy"])
 

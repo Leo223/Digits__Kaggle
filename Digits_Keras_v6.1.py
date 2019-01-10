@@ -12,6 +12,7 @@ from keras.optimizers import RMSprop
 from keras.utils import np_utils
 from keras.callbacks import ReduceLROnPlateau
 from keras.models import Model
+from keras.layers.advanced_activations import PReLU
 
 
 
@@ -41,33 +42,37 @@ model = Sequential()
 
 model.add(Conv2D(filters = 64, kernel_size = (5,5),padding = 'Same',
                  activation ='relu', input_shape = (28,28,1)))
-model.add(BatchNormalization())
+model.add(PReLU())
 model.add(Conv2D(filters = 64, kernel_size = (5,5),padding = 'Same',
                  activation ='relu'))
-model.add(BatchNormalization())
+model.add(PReLU())
 model.add(Conv2D(filters = 64, kernel_size = (3,3),padding = 'Same',
                  activation ='relu'))
-model.add(BatchNormalization())
+model.add(PReLU())
 model.add(MaxPool2D(pool_size=(2,2)))
+model.add(BatchNormalization())
 model.add(Dropout(0.25))
 
 
 model.add(Conv2D(filters = 32, kernel_size = (3,3),padding = 'Same',
                  activation ='relu'))
-model.add(BatchNormalization())
+model.add(PReLU())
 model.add(Conv2D(filters = 32, kernel_size = (3,3),padding = 'Same',
                  activation ='relu'))
-model.add(BatchNormalization())
+model.add(PReLU())
 model.add(MaxPool2D(pool_size=(2,2), strides=(2,2)))
+model.add(BatchNormalization())
 model.add(Dropout(0.25))
 
 model.add(Conv2D(filters = 64, kernel_size = (3,3),padding = 'Same',
                  activation ='relu'))
-model.add(BatchNormalization())
+model.add(PReLU())
 model.add(Conv2D(filters = 64, kernel_size = (3,3),padding = 'Same',
                  activation ='relu'))
-model.add(BatchNormalization())
+model.add(PReLU())
+
 model.add(MaxPool2D(pool_size=(2,2), strides=(2,2)))
+model.add(BatchNormalization())
 model.add(Dropout(0.25))
 
 model.add(Flatten())
@@ -106,10 +111,8 @@ history = model.fit_generator(datagen.flow(x_train,y_train, batch_size=batch_siz
                               callbacks = [learning_rate_reduction])
 
 # Persistimos el modelo
-model.save('Model_newNN_GPU_v4.4.h5')
+model.save('Model_newNN_GPU_v5.2.40.h5')
 
-##  40 epochs: Model --> loss: 0.0086 - acc: 0.9978 // Kaggle: Pos: --- acc: 0.99528
-##  50 epochs: Model --> loss: 0.0068 - acc: 0.9983 // Kaggle: Pos: 221 acc: 0.99685
-##  60 epochs: Model --> loss: 0.0061 - acc: 0.9986 // Kaggle: Pos: --- acc: 0.99671
-##  80 epochs: Model --> loss: 0.0051 - acc: 0.9987 // Kaggle: Pos: --- acc: 0.99671
-## 100 epochs: Model --> loss: 0.0048 - acc: 0.9990 // Kaggle: Pos: --- acc: 0.99600
+##  50 epochs/activation   relu: Model --> loss: 0.0148 - acc: 0.9954 // Kaggle: Pos: 203 acc: 0.99700
+##  50 epochs/activation linear: Model --> loss: 000000 - acc: 000000 // Kaggle: Pos: --- acc:
+##
