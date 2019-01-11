@@ -9,7 +9,7 @@ ruta_test = ruta + '/Data/test.csv'
 x_test_original = pd.read_csv(ruta_test).values
 
 
-model = load_model('Model_newNN_GPU_v5.5.40.h5')
+model = load_model('Model_newNN_GPU_v5.5.200.h5')
 
 def load_data(im):
     # Normalizamos las imagenes
@@ -34,7 +34,8 @@ for indice, imagen in enumerate(x_test_original):
 
 df1 = pd.DataFrame({'ImageId': list(pred_dict.keys()), 'Label': list(pred_dict.values())}).set_index('ImageId')
 
-df1.to_csv('./Data/Digits_out_v5.5.40.csv')
+df1.to_csv('./Data/Digits_out_v5.5.200.csv')
+
 
 
 

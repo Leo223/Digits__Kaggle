@@ -90,11 +90,11 @@ model.add(Dropout(0.25))
 model.add(Flatten())
 model.add(Dense(256, activation = "relu"))
 model.add(Dropout(0.5))
-model.add(Dense(10, activation = "softmax"))
-
+# model.add(Dense(10, activation = "softmax"))
+model.add(Dense(2, activation='sigmoid'))
 
 optimizer = RMSprop(lr=0.001, rho=0.9, epsilon=1e-08, decay=0.0)
-model.compile(optimizer = optimizer , loss = "categorical_crossentropy", metrics=["accuracy"])
+model.compile(optimizer = optimizer , loss = "binary_crossentropy", metrics=["accuracy"])
 
 
 # funcion para modificar el factor de aprendizaje en funcion de su evolucion
@@ -122,7 +122,8 @@ history = model.fit_generator(datagen.flow(x_train,y_train, batch_size=batch_siz
                               callbacks = [learning_rate_reduction])
 
 # Persistimos el modelo
-model.save('Model_newNN_GPU_4_9.h5')
+model.save('Model_newNN_GPU_4&9_v7.0.h5')
 
 
-## loss: 2.5251e-04 - acc: 1.0000
+# Epoch 60/60
+# 1000/1000 [==============================] - 24s 24ms/step - loss: 8.3809e-04 - acc: 0.9999
