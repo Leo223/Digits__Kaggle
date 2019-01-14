@@ -1,3 +1,11 @@
+"""
+Aumentamos el dataset con los digitos que se obtienen del dataset MNIST de Keras
+
+trampa 1.0
+"""
+
+
+
 import pandas as pd
 import numpy as np
 from PIL import Image,ImageFilter
@@ -13,17 +21,26 @@ from keras.utils import np_utils
 from keras.callbacks import ReduceLROnPlateau
 from keras.models import Model
 from keras.layers.advanced_activations import PReLU
+from keras.datasets import mnist
 
 
 
 ruta = os.getcwd()
-ruta_train = ruta + '/train.csv'
-ruta_test  = ruta + '/test.csv'
+ruta_train = ruta + '/Data/train.csv'
+ruta_test  = ruta + '/Data/test.csv'
 
 data = pd.read_csv(ruta_train)
 
 x_train = data[data.columns[1:]].values
 y_train = data[data.columns[0]].values
+
+
+(x_train2,y_train2),(x_train3,y_train3)=mnist.load_data()
+x_train2 = x_train2.reshape(x_train2.shape[0],28,28,1)
+x_train3 = x_train3.reshape(x_train3.shape[0],28,28,1)
+x_train23 = np.concatenate([x_train2,x_train3])
+
+
 
 # Normalizamos las imagenes
 x_train = x_train/255.0
@@ -31,8 +48,11 @@ x_train = x_train/255.0
 x_train = x_train.reshape(x_train.shape[0],28,28,1)
 
 # Vectorizamos las salidas
-y_train = np_utils.to_categorical(y_train,10)
+y_train  = np_utils.to_categorical(y_train,10)
+y_train2 = np_utils.to_categorical(y_train2,10)
+y_train3 = np_utils.to_categorical(y_train3,10)
 
+y_train23 = np.concatenate([y_train2,y_train3])
 
 
 """
@@ -111,11 +131,5 @@ history = model.fit_generator(datagen.flow(x_train,y_train, batch_size=batch_siz
                               callbacks = [learning_rate_reduction])
 
 # Persistimos el modelo
-model.save('Model_newNN_GPU_v5.2.40.h5')
+model.save('Model_newNN_GPU_v10.0.40.h5')
 
-##  50 epochs/activation      relu: Model --> loss: 0.0148 - acc: 0.9954 // Kaggle: Pos: 203 acc: 0.99700
-##  50 epochs/activation    linear: Model --> loss: 0.0087 - acc: 0.9976 // Kaggle: Pos: 183 acc: 0.99714
-##  50 epochs/activation Leakyrelu: Model --> loss: 0.0114 - acc: 0.9970 // Kaggle: Pos: --- acc: 0.99528
-
-##  60e (3,3)/activation lin/PRelu: Model --> loss: 0.0082 - acc: 0.9975 // Kaggle: Pos: 150 acc: 0.99742 !!
-##  60e (v2.)/activation lin/PRelu: Model --> loss: 0.0079 - acc: 0.9980 // Kaggle: Pos:  acc: 0.99685

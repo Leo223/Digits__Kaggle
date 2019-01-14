@@ -130,3 +130,29 @@ model.save('Model_newNN_GPU_v4.0.h5')
 
 
 
+########## AUX ##############
+from PIL import Image
+import numpy as np
+import pandas as pd
+import os
+
+# k1=test.loc[84][data.columns[1:]].values.reshape((28,28))
+# im1 = Image.fromarray(np.uint8(k1)).resize((50,50)).show()
+ruta = os.getcwd()
+ruta_test = ruta + '/Data/test.csv'
+
+df = pd.read_csv('./Data/Digits_out_v5.5.40_!!!.csv')
+df1 = pd.read_csv('./Data/Digits_out_v5.4.200.csv')
+
+
+label1 = df1.Label.values
+label=df.Label.values
+resta =  label1-label
+
+df['Label1']=label1
+df['resta']=resta
+dff = df[df['resta'] != 0]
+
+test = pd.read_csv(ruta_test)
+def imagen(pos):
+    im1=Image.fromarray(np.uint8(test.loc[pos].values.reshape((28,28)))).resize((50,50)).show()

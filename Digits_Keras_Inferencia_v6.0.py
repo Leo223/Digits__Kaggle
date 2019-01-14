@@ -30,27 +30,34 @@ def load_data(im):
     im = im.reshape(1, 28, 28, 1)
     return im
 
-def func_49(x_test):
-    y_pred = model49.predict(x_test)
-    prediccion = dic_num49.get(np.argmax(y_pred))
+def func_49(x_test,prediccion,prob):
+    y_pred2 = model49.predict(x_test)
+    prediccion2 = dic_num49.get(np.argmax(y_pred2))
+    prob2 = y_pred2[0][np.argmax(y_pred2)]
+    if prob2 > prob:
+        prediccion = prediccion2
     return prediccion
 
-def func_38(x_test):
-    y_pred = model38.predict(x_test)
-    prediccion = dic_num38.get(np.argmax(y_pred))
+def func_38(x_test,prediccion,prob):
+    y_pred2 = model38.predict(x_test)
+    prediccion2 = dic_num38.get(np.argmax(y_pred2))
+    prob2 = y_pred2[0][np.argmax(y_pred2)]
+    if prob2 > prob:
+        prediccion = prediccion2
     return prediccion
 
 
 def Predict(ima_test, model=model,model49=model49):
     x_test = load_data(ima_test)
     y_pred = model.predict(x_test)
-    prediccion = np.argmax(y_pred[0])
+    prediccion = np.argmax(y_pred)
+    prob = y_pred[0][prediccion]
 
     if prediccion in [4,9]:
-        prediccion = func_49(x_test)
+        prediccion = func_49(x_test,prediccion,prob)
 
     if prediccion in [3,8]:
-        prediccion = func_38(x_test)
+        prediccion = func_38(x_test,prediccion,prob)
 
     return prediccion
 
@@ -63,9 +70,10 @@ for indice, imagen in enumerate(x_test_original):
 
 df1 = pd.DataFrame({'ImageId': list(pred_dict.keys()), 'Label': list(pred_dict.values())}).set_index('ImageId')
 
-df1.to_csv('./Data/Digits_out_v8.0.csv')
+df1.to_csv('./Data/Digits_out_v8.1.csv')
 
 ## v
-## v7.0 (4&9)     -->   Kaggle: Pos: --- acc: 0.99685
-## v7.0 (4&9 3&8) -->   Kaggle: Pos: --- acc: 0.99671
+## v7.0 (4&9)        -->   Kaggle: Pos: --- acc: 0.99685
+## v7.0 (4&9 3&8)    -->   Kaggle: Pos: --- acc: 0.99671
+## v7.0 (4&9 3&8 v2) -->   Kaggle: Pos: --- acc: 0.99685
 
